@@ -15,7 +15,6 @@
                     @csrf
 
                     <div class="row g-4">
-                        <!-- Основная информация -->
                         <div class="col-12">
                             <h6 class="fw-bold mb-3">ОСНОВНАЯ ИНФОРМАЦИЯ</h6>
                         </div>
@@ -38,12 +37,11 @@
                             <div class="invalid-feedback">Введите описание товара</div>
                         </div>
 
-                        <!-- Цена и изображение -->
                         <div class="col-md-6">
-                            <label for="price" class="form-label">Цена аренды (₽/день) <span class="text-danger">*</span></label>
+                            <label for="price" class="form-label">Цена (₽) <span class="text-danger">*</span></label>
                             <div class="input-group">
-                                <input type="text" class="form-control" id="price" name="price" value="{{ old('price', $product->price) }}" placeholder="Например: 4999" required>
-                                <span class="input-group-text">₽/день</span>
+                                <input type="text" class="form-control" id="price" name="price" value="{{ old('price', $product->price) }}" placeholder="Например: 499" required>
+                                <span class="input-group-text">₽</span>
                             </div>
                             <small class="text-muted">Введите сумму вручную</small>
                             <div class="invalid-feedback">Введите корректную цену</div>
@@ -60,12 +58,11 @@
                             @endif
                         </div>
 
-                        <!-- Характеристики -->
                         <div class="col-12 mt-4">
                             <h6 class="fw-bold mb-3">ХАРАКТЕРИСТИКИ</h6>
                         </div>
 
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <label for="category_id" class="form-label">Категория <span class="text-danger">*</span></label>
                             <select class="form-select" id="category_id" name="category_id" required>
                                 <option value="" disabled>Выберите категорию</option>
@@ -78,19 +75,31 @@
                             <div class="invalid-feedback">Выберите категорию</div>
                         </div>
 
-                        <div class="col-md-4">
+                        <div class="col-md-3">
+                            <label for="animal_type" class="form-label">Для какого животного <span class="text-danger">*</span></label>
+                            <select class="form-select" id="animal_type" name="animal_type" required>
+                                <option value="" disabled>Выберите животное</option>
+                                @foreach($animalTypes as $type)
+                                    <option value="{{ $type }}" {{ old('animal_type', $product->animal_type) == $type ? 'selected' : '' }}>
+                                        {{ $type }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            <div class="invalid-feedback">Выберите животное</div>
+                        </div>
+
+                        <div class="col-md-3">
                             <label for="year" class="form-label">Год выпуска <span class="text-danger">*</span></label>
                             <input type="number" class="form-control" id="year" name="year" value="{{ old('year', $product->year) }}" min="2000" max="{{ date('Y') + 1 }}" required>
                             <div class="invalid-feedback">Введите корректный год</div>
                         </div>
 
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <label for="country" class="form-label">Страна <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="country" name="country" value="{{ old('country', $product->country) }}" required>
                             <div class="invalid-feedback">Введите страну-производителя</div>
                         </div>
 
-                        <!-- Количество -->
                         <div class="col-md-6">
                             <label for="in_stock" class="form-label">Количество на складе <span class="text-danger">*</span></label>
                             <input type="number" class="form-control" id="in_stock" name="in_stock" value="{{ old('in_stock', $product->in_stock) }}" min="0" required>
@@ -98,11 +107,10 @@
                         </div>
 
                         <div class="col-md-6">
-                            <label for="category_name" class="form-label">Текущая категория</label>
+                            <label for="category_name" class="form-label">Текущая категория (название)</label>
                             <input type="text" class="form-control" id="category_name" value="{{ $categoryName ?? 'Неизвестно' }}" disabled>
                         </div>
 
-                        <!-- Кнопки -->
                         <div class="col-12 mt-4">
                             <div class="d-flex flex-wrap gap-3">
                                 <button type="submit" class="btn btn-purple btn-lg px-5">
@@ -121,7 +129,6 @@
 </div>
 
 <script>
-// Валидация формы
 (function () {
     'use strict'
     var forms = document.querySelectorAll('.needs-validation')
@@ -137,7 +144,6 @@
         })
 })()
 
-// Разрешаем вводить только цифры в поле цены
 document.getElementById('price').addEventListener('input', function(e) {
     this.value = this.value.replace(/[^0-9]/g, '');
 });

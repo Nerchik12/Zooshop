@@ -18,6 +18,7 @@
                     <th>ID</th>
                     <th>Товар</th>
                     <th>Категория</th>
+                    <th>Для</th>
                     <th>Цена</th>
                     <th>Наличие</th>
                     <th>Страна</th>
@@ -40,7 +41,14 @@
                         </div>
                     </td>
                     <td>{{ $product->category_name }}</td>
-                    <td><strong>{{ number_format($product->price, 0, '', ' ') }} ₽/день</strong></td>
+                    <td>
+                        @if($product->animal_type)
+                            <span class="badge" style="background: #FF8C42;">{{ $product->animal_type }}</span>
+                        @else
+                            <span class="text-muted">—</span>
+                        @endif
+                    </td>
+                    <td><strong>{{ number_format($product->price, 0, '', ' ') }} ₽</strong></td>
                     <td>
                         @if($product->in_stock > 0)
                             <span class="badge badge-green">{{ $product->in_stock }} шт.</span>

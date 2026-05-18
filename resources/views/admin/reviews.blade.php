@@ -86,7 +86,7 @@
 }
 
 .star-filled {
-    color: #f39c12;
+    color: #FF8C42;
     font-size: 1.2rem;
 }
 

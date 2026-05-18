@@ -63,7 +63,7 @@
                                 @endif
 
                                 <form action="{{ route('admin.users.delete', $user->id) }}" method="POST" class="d-inline"
-                                      onsubmit="return confirm('Вы уверены, что хотите удалить пользователя {{ $user->name }}?') ?>">
+                                      onsubmit="return confirm('Вы уверены, что хотите удалить пользователя {{ $user->name }}?')">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-sm btn-outline-danger" title="Удалить">

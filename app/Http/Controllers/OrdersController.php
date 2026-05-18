@@ -29,29 +29,31 @@ class OrdersController extends Controller
                     'products.name as product_name',
                     'order_cart.quantity',
                     'order_cart.unit_price',
-                    DB::raw('COALESCE(order_cart.rental_days, 1) as rental_days'),
-                    DB::raw('order_cart.quantity * order_cart.unit_price * COALESCE(order_cart.rental_days, 1) as item_total')
+                    DB::raw('order_cart.quantity * order_cart.unit_price as item_total')
                 )
                 ->join('products', 'products.id', '=', 'order_cart.products_id')
                 ->where('order_cart.order_id', $order->id)
                 ->get();
+                
+            $order->order_total = $order->products->sum('item_total');
+            $order->total_items = $order->products->sum('quantity');
         }
         
         return view('orders', compact('orders'));
     }
 
-public function removeOrders(Request $request)
-{
-    $orderId = $request->input('order_id');
-    $userId = Auth()->user()->id;
-    
+    public function removeOrders(Request $request)
+    {
+        $orderId = $request->input('order_id');
+        $userId = Auth()->user()->id;
+        
 
-    DB::table('order_cart')->where('order_id', $orderId)->delete();
-    DB::table('orders')
-        ->where('id', $orderId)
-        ->where('user_id', $userId) 
-        ->delete();
-    
-    return redirect()->back();
-}
+        DB::table('order_cart')->where('order_id', $orderId)->delete();
+        DB::table('orders')
+            ->where('id', $orderId)
+            ->where('user_id', $userId) 
+            ->delete();
+        
+        return redirect()->back();
+    }
 }

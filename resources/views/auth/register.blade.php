@@ -3,9 +3,12 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-8 col-lg-6">
             <div class="auth-form-container">
                 <div class="auth-header">
+                    <div class="auth-icon">
+                        <i class="bi bi-person-plus"></i>
+                    </div>
                     <h1 class="auth-title">{{ __('Регистрация') }}</h1>
                 </div>
 
@@ -16,9 +19,9 @@
                         <div class="input-field-group">
                             <label for="name" class="field-label">{{ __('Имя') }}</label>
                             <div class="field-with-icon">
+                                <i class="bi bi-person field-icon"></i>
                                 <input id="name" type="text" class="field-input @error('name') is-invalid @enderror" 
                                        name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
-                                <i class="field-icon fas fa-user"></i>
                             </div>
                             @error('name')
                                 <span class="validation-error" role="alert">
@@ -30,9 +33,9 @@
                         <div class="input-field-group">
                             <label for="email" class="field-label">{{ __('Email') }}</label>
                             <div class="field-with-icon">
+                                <i class="bi bi-envelope field-icon"></i>
                                 <input id="email" type="email" class="field-input @error('email') is-invalid @enderror" 
                                        name="email" value="{{ old('email') }}" required autocomplete="email">
-                                <i class="field-icon fas fa-envelope"></i>
                             </div>
                             @error('email')
                                 <span class="validation-error" role="alert">
@@ -43,8 +46,8 @@
 
                         <div class="input-field-group">
                             <label for="phone" class="field-label">{{ __('Телефон') }}</label>
-                            <div class="phone-input-wrapper">
-                                
+                            <div class="field-with-icon">
+                                <i class="bi bi-phone field-icon"></i>
                                 <input id="phone" type="text" class="field-input phone-input @error('phone') is-invalid @enderror" 
                                        name="phone" value="{{ old('phone') }}" required autocomplete="phone" 
                                        placeholder="79123456789">
@@ -59,9 +62,9 @@
                         <div class="input-field-group">
                             <label for="password" class="field-label">{{ __('Пароль') }}</label>
                             <div class="field-with-icon">
+                                <i class="bi bi-lock field-icon"></i>
                                 <input id="password" type="password" class="field-input @error('password') is-invalid @enderror" 
                                        name="password" required autocomplete="new-password">
-                                <i class="field-icon fas fa-lock"></i>
                             </div>
 
                             @error('password')
@@ -74,9 +77,9 @@
                         <div class="input-field-group">
                             <label for="password-confirm" class="field-label">{{ __('Повторите пароль') }}</label>
                             <div class="field-with-icon">
+                                <i class="bi bi-lock field-icon"></i>
                                 <input id="password-confirm" type="password" class="field-input" 
                                        name="password_confirmation" required autocomplete="new-password">
-                                <i class="field-icon fas fa-lock"></i>
                             </div>
                         </div>
 
@@ -96,11 +99,11 @@
 
                         <div class="form-actions-row">
                             <button type="submit" class="submit-button">
-                                <i class="fas fa-user-plus me-2"></i>{{ __('Зарегистрироваться') }}
+                                <i class="bi bi-person-plus me-2"></i>{{ __('Зарегистрироваться') }}
                             </button>
                             <div class="auth-links">
                                 <a class="auth-link" href="{{ route('login') }}">
-                                    <i class="fas fa-sign-in-alt"></i>{{ __('Уже есть аккаунт? Войти') }}
+                                    <i class="bi bi-box-arrow-in-right"></i>{{ __('Уже есть аккаунт? Войти') }}
                                 </a>
                             </div>
                         </div>
@@ -110,4 +113,171 @@
         </div>
     </div>
 </div>
+
+<style>
+.auth-form-container {
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+    overflow: hidden;
+    margin: 2rem 0;
+}
+
+.auth-header {
+    padding: 2.5rem 2rem 1.5rem;
+    text-align: center;
+    background: linear-gradient(135deg, #FFF3E0, #fff);
+}
+
+.auth-icon {
+    width: 70px;
+    height: 70px;
+    margin: 0 auto 1rem;
+    background: linear-gradient(135deg, #FF8C42, #FF6B6B);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.auth-icon i {
+    font-size: 2rem;
+    color: #fff;
+}
+
+.auth-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--dark-color);
+}
+
+.auth-body {
+    padding: 1.5rem 2rem 2.5rem;
+}
+
+.input-field-group {
+    margin-bottom: 1.25rem;
+}
+
+.field-label {
+    display: block;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.field-with-icon {
+    position: relative;
+}
+
+.field-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #aaa;
+    font-size: 1.1rem;
+}
+
+.field-input {
+    width: 100%;
+    padding: 12px 16px 12px 42px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+    background: #fafafa;
+}
+
+.field-input:focus {
+    outline: none;
+    border-color: #FF8C42;
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(255, 140, 66, 0.1);
+}
+
+.validation-error {
+    display: block;
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    color: #e74c3c;
+}
+
+.remember-me-check {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.checkbox-input {
+    width: 18px;
+    height: 18px;
+    accent-color: #FF8C42;
+}
+
+.checkbox-label {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.terms-text {
+    font-size: 0.8rem;
+    color: #999;
+    margin-top: 0.5rem;
+}
+
+.terms-link {
+    color: #FF8C42;
+    text-decoration: none;
+}
+
+.form-actions-row {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.submit-button {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, #FF8C42, #FF6B6B);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.submit-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 140, 66, 0.4);
+}
+
+.auth-links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.auth-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: #FF8C42;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.auth-link:hover {
+    color: #e67a30;
+}
+</style>
 @endsection

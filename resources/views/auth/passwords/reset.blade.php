@@ -3,85 +3,205 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="password-reset-container">
-                <div class="password-reset-card">
-                    <div class="password-reset-header">
-                        <h1 class="password-reset-title">{{ __('Сброс пароля') }}</h1>
+        <div class="col-md-8 col-lg-6">
+            <div class="auth-form-container">
+                <div class="auth-header">
+                    <div class="auth-icon">
+                        <i class="bi bi-arrow-counterclockwise"></i>
                     </div>
+                    <h1 class="auth-title">{{ __('Сброс пароля') }}</h1>
+                </div>
 
-                    <div class="password-reset-body">
-                        <form method="POST" action="{{ route('password.update') }}" class="password-reset-form">
-                            @csrf
+                <div class="auth-body">
+                    <form method="POST" action="{{ route('password.update') }}">
+                        @csrf
+                        <input type="hidden" name="token" value="{{ $token }}">
 
-                            <input type="hidden" name="token" value="{{ $token }}">
-
-                            <div class="form-group">
-                                <label for="email" class="password-reset-label">
-                                    <i class="fas fa-envelope me-1"></i>{{ __('Email адрес') }}
-                                </label>
-                                <div class="password-reset-field">
-                                    <input id="email" type="email" 
-                                           class="password-reset-input @error('email') is-invalid @enderror" 
-                                           name="email" value="{{ $email ?? old('email') }}" 
-                                           required autocomplete="email" autofocus>
-                                    <i class="password-reset-icon fas fa-at"></i>
-                                </div>
-                                @error('email')
-                                    <span class="password-reset-error" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                        <div class="input-field-group">
+                            <label for="email" class="field-label"><i class="bi bi-envelope me-1"></i>{{ __('Email адрес') }}</label>
+                            <div class="field-with-icon">
+                                <i class="bi bi-envelope field-icon"></i>
+                                <input id="email" type="email" 
+                                       class="field-input @error('email') is-invalid @enderror" 
+                                       name="email" value="{{ $email ?? old('email') }}" 
+                                       required autocomplete="email" autofocus>
                             </div>
+                            @error('email')
+                                <span class="validation-error" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
 
-                            <div class="form-group">
-                                <label for="password" class="password-reset-label">
-                                    <i class="fas fa-lock me-1"></i>{{ __('Новый пароль') }}
-                                </label>
-                                <div class="password-reset-field">
-                                    <input id="password" type="password" 
-                                           class="password-reset-input @error('password') is-invalid @enderror" 
-                                           name="password" required autocomplete="new-password">
-                                    <i class="password-reset-icon fas fa-key"></i>
-                                </div>
-                                <div class="password-strength-container">
-                                    <div class="password-strength-bar">
-                                        <div class="password-strength-fill" id="password-strength-bar"></div>
-                                    </div>
-                                    <div class="password-strength-text" id="password-strength-text">Введите пароль</div>
-                                </div>
-                                @error('password')
-                                    <span class="password-reset-error" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                        <div class="input-field-group">
+                            <label for="password" class="field-label"><i class="bi bi-lock me-1"></i>{{ __('Новый пароль') }}</label>
+                            <div class="field-with-icon">
+                                <i class="bi bi-lock field-icon"></i>
+                                <input id="password" type="password" 
+                                       class="field-input @error('password') is-invalid @enderror" 
+                                       name="password" required autocomplete="new-password">
                             </div>
+                            @error('password')
+                                <span class="validation-error" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
 
-                            <div class="form-group">
-                                <label for="password-confirm" class="password-reset-label">
-                                    <i class="fas fa-lock me-1"></i>{{ __('Подтвердите пароль') }}
-                                </label>
-                                <div class="password-reset-field">
-                                    <input id="password-confirm" type="password" 
-                                           class="password-reset-input" 
-                                           name="password_confirmation" required autocomplete="new-password">
-                                    <i class="password-reset-icon fas fa-lock"></i>
-                                </div>
+                        <div class="input-field-group">
+                            <label for="password-confirm" class="field-label"><i class="bi bi-lock me-1"></i>{{ __('Подтвердите пароль') }}</label>
+                            <div class="field-with-icon">
+                                <i class="bi bi-lock field-icon"></i>
+                                <input id="password-confirm" type="password" 
+                                       class="field-input" 
+                                       name="password_confirmation" required autocomplete="new-password">
                             </div>
+                        </div>
 
-                            <button type="submit" class="password-reset-button">
-                                <i class="fas fa-redo-alt"></i>
-                                <span>{{ __('Сбросить пароль') }}</span>
-                            </button>
+                        <button type="submit" class="submit-button">
+                            <i class="bi bi-arrow-counterclockwise me-2"></i>{{ __('Сбросить пароль') }}
+                        </button>
 
-                            <div class="password-reset-info">
-                                <p>{{ __('Вернуться к') }} <a href="{{ route('login') }}" class="password-reset-link">авторизации</a></p>
-                            </div>
-                        </form>
-                    </div>
+                        <div class="auth-links mt-4">
+                            <a class="auth-link" href="{{ route('login') }}">
+                                <i class="bi bi-box-arrow-in-right"></i>{{ __('Войти') }}
+                            </a>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<style>
+.auth-form-container {
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+    overflow: hidden;
+    margin: 2rem 0;
+}
+
+.auth-header {
+    padding: 2.5rem 2rem 1.5rem;
+    text-align: center;
+    background: linear-gradient(135deg, #FFF3E0, #fff);
+}
+
+.auth-icon {
+    width: 70px;
+    height: 70px;
+    margin: 0 auto 1rem;
+    background: linear-gradient(135deg, #20B2AA, #17a589);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.auth-icon i {
+    font-size: 2rem;
+    color: #fff;
+}
+
+.auth-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--dark-color);
+}
+
+.auth-body {
+    padding: 1.5rem 2rem 2.5rem;
+}
+
+.input-field-group {
+    margin-bottom: 1.25rem;
+}
+
+.field-label {
+    display: block;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.field-with-icon {
+    position: relative;
+}
+
+.field-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #aaa;
+    font-size: 1.1rem;
+}
+
+.field-input {
+    width: 100%;
+    padding: 12px 16px 12px 42px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+    background: #fafafa;
+}
+
+.field-input:focus {
+    outline: none;
+    border-color: #20B2AA;
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(32, 178, 170, 0.1);
+}
+
+.validation-error {
+    display: block;
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    color: #e74c3c;
+}
+
+.submit-button {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, #20B2AA, #17a589);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.submit-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(32, 178, 170, 0.4);
+}
+
+.auth-links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.auth-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: #20B2AA;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.auth-link:hover {
+    color: #17a589;
+}
+</style>
 @endsection

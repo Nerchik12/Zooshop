@@ -5,7 +5,6 @@
 
 @section('content')
 <div class="row g-4 mb-4">
-    <!-- Пользователи -->
     <div class="col-md-3 col-sm-6">
         <div class="stat-card">
             <div class="stat-icon purple">
@@ -18,7 +17,6 @@
         </div>
     </div>
 
-    <!-- Админы -->
     <div class="col-md-3 col-sm-6">
         <div class="stat-card">
             <div class="stat-icon blue">
@@ -31,7 +29,6 @@
         </div>
     </div>
 
-    <!-- Заказы -->
     <div class="col-md-3 col-sm-6">
         <div class="stat-card">
             <div class="stat-icon green">
@@ -44,7 +41,6 @@
         </div>
     </div>
 
-    <!-- Товары -->
     <div class="col-md-3 col-sm-6">
         <div class="stat-card">
             <div class="stat-icon orange">
@@ -58,7 +54,6 @@
     </div>
 </div>
 
-<!-- Выручка -->
 <div class="row mb-4">
     <div class="col-12">
         <div class="stat-card">
@@ -74,7 +69,6 @@
 </div>
 
 <div class="row g-4">
-    <!-- Последние заказы -->
     <div class="col-lg-8">
         <div class="admin-table">
             <div class="p-4 border-bottom d-flex justify-content-between align-items-center">
@@ -127,7 +121,6 @@
         </div>
     </div>
 
-    <!-- Новые пользователи -->
     <div class="col-lg-4">
         <div class="admin-table">
             <div class="p-4 border-bottom d-flex justify-content-between align-items-center">
@@ -161,7 +154,6 @@
     </div>
 </div>
 
-<!-- Быстрые действия -->
 <div class="row mt-4">
     <div class="col-12">
         <div class="admin-table p-4">

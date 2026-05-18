@@ -2,18 +2,16 @@
 
 @section('content')
 
-    <!-- Форма обратной связи -->
     <section class="py-5 bg-light">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-8">
                     <div class="contact-form-card">
                         <div class="text-center mb-5">
-                            <h2 class="section-title mb-3">ОСТАВЬТЕ ОТЗЫВ О НАШЕЙ КОМПАНИИ</h2>
+                            <h2 class="section-title mb-3">ОСТАВЬТЕ ОТЗЫВ О НАШЕМ МАГАЗИНЕ</h2>
                             <p class="text-muted">Ваше мнение помогает нам становиться лучше каждый день</p>
                         </div>
 
-                        <!-- Сообщения -->
                         @if(session('success'))
                             <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
                                 <i class="bi bi-check-circle me-2"></i>
@@ -30,7 +28,6 @@
                             </div>
                         @endif
 
-                        <!-- Форма -->
                         <form method="POST" action="{{ route('sendReview') }}">
                             @csrf
                             <div class="row g-3">

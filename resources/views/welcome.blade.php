@@ -2,13 +2,12 @@
 
 @section('content')
 <main>
-    <!-- Компактный баннер -->
     <section class="hero-section-compact">
         <div class="container position-relative z-2">
             <div class="row align-items-center py-5">
                 <div class="col-lg-12 text-center">
-                    <h1 class="display-4 fw-bold mb-3">СТРОЙМАСТЕР</h1>
-                    <p class="lead mb-4">Профессиональные строительные материалы и инструменты</p>
+                    <h1 class="display-4 fw-bold mb-3">ЗООМАГАЗИН</h1>
+                    <p class="lead mb-4">Всё для ваших любимых питомцев</p>
                     <form action="{{ route('catalog') }}" method="GET" class="search-form">
                         <div class="row justify-content-center g-3">
                             <div class="col-lg-6 col-md-8">
@@ -26,12 +25,10 @@
         </div>
     </section>
 
-    <!-- Все категории с быстрыми фильтрами -->
     <section class="py-5">
         <div class="container">
             <h2 class="section-title mb-4">КАТАЛОГ ТОВАРОВ</h2>
             
-            <!-- Быстрые фильтры -->
             <div class="quick-filters mb-4">
                 <div class="row g-2">
                     <div class="col-auto">
@@ -40,7 +37,7 @@
                         </a>
                     </div>
                     @php
-                        $filterCategories = ['Ручной инструмент', 'Электроинструмент', 'Измерительное оборудование', 'Садовая техника', 'Силовое оборудование', 'Строительное оборудование', 'Клининг и уход'];
+                        $filterCategories = ['Корм', 'Игрушки', 'Аксессуары', 'Средства ухода'];
                     @endphp
                     @foreach($filterCategories as $cat)
                     <div class="col-auto">
@@ -52,18 +49,14 @@
                 </div>
             </div>
 
-            <!-- Сетка категорий -->
             <div class="categories-grid mb-5">
                 <div class="row g-4">
                     @php
                         $allCategories = [
-                            ['name' => 'Ручной инструмент', 'icon' => 'bi-hammer', 'color' => '#e74c3c'],
-                            ['name' => 'Электроинструмент', 'icon' => 'bi-lightning', 'color' => '#3498db'],
-                            ['name' => 'Измерительное оборудование', 'icon' => 'bi-rulers', 'color' => '#9b59b6'],
-                            ['name' => 'Садовая техника', 'icon' => 'bi-tree', 'color' => '#9b59b6'],
-                            ['name' => 'Силовое оборудование', 'icon' => 'bi-battery-charging', 'color' => '#f39c12'],
-                            ['name' => 'Строительное оборудование', 'icon' => 'bi-cone-striped', 'color' => '#e67e22'],
-                            ['name' => 'Клининг и уход', 'icon' => 'bi-bucket', 'color' => '#1abc9c'],
+                            ['name' => 'Корм', 'icon' => 'bi-basket', 'color' => '#FF8C42'],
+                            ['name' => 'Игрушки', 'icon' => 'bi-bullseye', 'color' => '#FF6B6B'],
+                            ['name' => 'Аксессуары', 'icon' => 'bi-backpack', 'color' => '#20B2AA'],
+                            ['name' => 'Средства ухода', 'icon' => 'bi-droplet', 'color' => '#3498db'],
                         ];
                     @endphp
                     @foreach($allCategories as $cat)
@@ -82,7 +75,6 @@
                 </div>
             </div>
 
-            <!-- Товары по категориям -->
             @foreach($allCategories as $catData)
                 @php
                     $categoryProducts = DB::table('products')
@@ -117,7 +109,7 @@
                                         </a>
                                     </h5>
                                     <div class="price-section">
-                                        <div class="price">{{ number_format($product->price, 0, '', ' ') }} ₽/день</div>
+                                        <div class="price">{{ number_format($product->price, 0, '', ' ') }} ₽</div>
                                         <div class="actions">
                                             <button class="btn btn-cart-sm" onclick="event.stopPropagation(); document.getElementById('cart-form-{{ $product->id }}').submit();">
                                                 <i class="bi bi-cart-plus"></i>
@@ -125,7 +117,6 @@
                                             <form id="cart-form-{{ $product->id }}" method="POST" action="{{ route('add_buscket') }}" class="d-none">
                                                 @csrf
                                                 <input type="hidden" name="id" value="{{ $product->id }}">
-                                                <input type="hidden" name="rental_days" value="1">
                                             </form>
                                         </div>
                                     </div>
@@ -140,7 +131,6 @@
         </div>
     </section>
 
-    <!-- Преимущества -->
     <section class="py-5 bg-light">
         <div class="container">
             <h2 class="text-center section-title mb-5">ПОЧЕМУ МЫ</h2>
@@ -159,7 +149,7 @@
                         <div class="feature-icon-modern">
                             <i class="bi bi-shield-check"></i>
                         </div>
-                        <h5>Гарантия 2 года</h5>
+                        <h5>Гарантия 30 дней</h5>
                         <p class="text-muted small">На все товары</p>
                     </div>
                 </div>
@@ -187,9 +177,8 @@
 </main>
 
 <style>
-/* Компактный баннер */
 .hero-section-compact {
-    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    background: linear-gradient(135deg, #2D3436 0%, #1a1a2e 100%);
     padding: 60px 0;
     position: relative;
     overflow: hidden;
@@ -228,7 +217,6 @@
     padding: 15px 30px;
 }
 
-/* Быстрые фильтры */
 .filter-chip {
     border-radius: 50px;
     padding: 8px 16px;
@@ -239,12 +227,11 @@
 
 .filter-chip:hover,
 .filter-chip.active {
-    background: linear-gradient(135deg, #3498db, #2980b9);
-    border-color: #3498db;
+    background: linear-gradient(135deg, #FF8C42, #FF6B6B);
+    border-color: #FF8C42;
     color: #fff;
 }
 
-/* Современные карточки категорий */
 .category-card-modern {
     display: block;
     padding: 2rem 1.5rem;
@@ -259,7 +246,7 @@
 
 .category-card-modern:hover {
     transform: translateY(-8px);
-    box-shadow: 0 12px 30px rgba(39, 174, 96, 0.2);
+    box-shadow: 0 12px 30px rgba(255, 140, 66, 0.2);
 }
 
 .category-card-icon {
@@ -293,7 +280,7 @@
     opacity: 0;
     transform: translateX(-10px);
     transition: all 0.3s ease;
-    color: #3498db;
+    color: #FF8C42;
 }
 
 .category-card-modern:hover .category-card-arrow {
@@ -301,7 +288,6 @@
     transform: translateX(0);
 }
 
-/* Секция товаров категории */
 .category-products-section {
     padding: 2rem 0;
     border-bottom: 1px solid #e0e0e0;
@@ -318,30 +304,133 @@
     letter-spacing: 0.5px;
 }
 
-/* Преимущества */
+.product-card {
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.product-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 30px rgba(255, 140, 66, 0.15);
+}
+
+.product-image-wrapper {
+    position: relative;
+    padding-top: 100%;
+    overflow: hidden;
+    background: #f8f9fa;
+}
+
+.product-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.product-card:hover .product-img {
+    transform: scale(1.05);
+}
+
+.badge-in-stock {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: linear-gradient(135deg, #20B2AA, #17a589);
+    color: #fff;
+    padding: 0.4rem 0.75rem;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 0.7rem;
+    z-index: 10;
+    text-transform: uppercase;
+}
+
+.card-body {
+    padding: 1.25rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 0.5rem;
+}
+
+.product-title-link {
+    color: #1a1a1a;
+    text-decoration: none;
+}
+
+.price-section {
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.price {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #FF8C42;
+}
+
+.btn-cart-sm {
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, #FF8C42, #FF6B6B);
+    border: none;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    transition: all 0.3s ease;
+}
+
+.btn-cart-sm:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 15px rgba(255, 140, 66, 0.4);
+}
+
 .feature-card-modern {
     padding: 2rem 1rem;
     background: #fff;
     border-radius: 12px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.05);
     transition: all 0.3s ease;
+    height: 100%;
 }
 
 .feature-card-modern:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(44, 62, 80, 0.1);
+    box-shadow: 0 8px 25px rgba(255, 140, 66, 0.1);
 }
 
 .feature-icon-modern {
     width: 80px;
     height: 80px;
     margin: 0 auto 1rem;
-    background: linear-gradient(135deg, #3498db, #2980b9);
+    background: linear-gradient(135deg, #FF8C42, #20B2AA);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+    box-shadow: 0 4px 15px rgba(255, 140, 66, 0.3);
 }
 
 .feature-icon-modern i {

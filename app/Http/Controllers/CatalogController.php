@@ -9,16 +9,13 @@ class CatalogController extends Controller
 {
     public function catalog(Request $request)
     {
-        // Простой запрос к таблице products
         $products = DB::table('products');
 
-        // Поиск по названию (если пришло имя)
         if ($request->has('name')) {
             $name = $request->input('name');
             $products = $products->where('name', 'like', '%' . $name . '%');
         }
 
-        // Фильтр по категории (если выбрана)
         if ($request->has('category')) {
             $category = $request->input('category');
             if ($category != '') {
@@ -26,12 +23,38 @@ class CatalogController extends Controller
             }
         }
 
-        // Фильтр по наличию
+        if ($request->has('animal_type')) {
+            $animalType = $request->input('animal_type');
+            if ($animalType != '') {
+                if ($animalType === 'Все') {
+                    // показываем все
+                } else {
+                    $products = $products->where(function($q) use ($animalType) {
+                        $q->where('animal_type', $animalType)
+                          ->orWhere('animal_type', 'Все');
+                    });
+                }
+            }
+        }
+
+        if ($request->has('brand')) {
+            $brand = $request->input('brand');
+            if ($brand != '') {
+                $products = $products->where('brand', $brand);
+            }
+        }
+
+        if ($request->has('age')) {
+            $age = $request->input('age');
+            if ($age != '') {
+                $products = $products->where('age', $age);
+            }
+        }
+
         if ($request->has('in_stock') && $request->input('in_stock') == '1') {
             $products = $products->where('in_stock', '>', 0);
         }
 
-        // Фильтр по цене
         if ($request->has('min_price') && $request->input('min_price') != '') {
             $products = $products->where('price', '>=', $request->input('min_price'));
         }
@@ -39,8 +62,7 @@ class CatalogController extends Controller
             $products = $products->where('price', '<=', $request->input('max_price'));
         }
 
-        // Сортировка
-        $sort = $request->input('sort', 'id_desc');
+        $sort = $request->input('sort', 'popular');
         if ($sort == 'price_asc') {
             $products = $products->orderBy('price', 'asc');
         } elseif ($sort == 'price_desc') {
@@ -51,23 +73,43 @@ class CatalogController extends Controller
             $products = $products->orderBy('name', 'desc');
         } elseif ($sort == 'in_stock_desc') {
             $products = $products->orderBy('in_stock', 'desc');
+        } elseif ($sort == 'novelty') {
+            $products = $products->orderBy('id', 'desc');
+        } elseif ($sort == 'popular') {
+            $products = $products->orderBy('in_stock', 'desc')->orderBy('id', 'desc');
         } else {
             $products = $products->orderBy('id', 'desc');
         }
 
-        // Получаем все товары
         $products = $products->get();
 
-        // Получаем список категорий для выпадающего списка
         $categories = DB::table('categories')
             ->select('id', 'name')
             ->orderBy('name')
             ->get();
 
-        // Передаем на страницу
+        $animalTypes = ['Кошка', 'Собака', 'Птица', 'Грызун', 'Все'];
+
+        $brands = DB::table('products')
+            ->whereNotNull('brand')
+            ->select('brand')
+            ->distinct()
+            ->orderBy('brand')
+            ->pluck('brand');
+
+        $ages = DB::table('products')
+            ->whereNotNull('age')
+            ->select('age')
+            ->distinct()
+            ->orderBy('age')
+            ->pluck('age');
+
         return view('catalog', [
             'products' => $products,
-            'categories' => $categories
+            'categories' => $categories,
+            'animalTypes' => $animalTypes,
+            'brands' => $brands,
+            'ages' => $ages
         ]);
     }
 }

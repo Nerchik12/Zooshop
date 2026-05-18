@@ -8,12 +8,8 @@ use Illuminate\Support\Facades\Auth;
 
 class WhyController extends Controller
 {
-    /**
-     * Главная страница (при нажатии на логотип)
-     */
     public function index()
     {
-        // Получаем последние добавленные товары (8 штук)
         $products = DB::table('products')
             ->where('in_stock', '>', 0)
             ->orderBy('created_at', 'desc')
@@ -23,29 +19,23 @@ class WhyController extends Controller
         return view('home-page', compact('products'));
     }
 
-    /**
-     * Страница "О нас"
-     */
     public function why()
     {
-        // Получаем последние добавленные товары (4 штуки)
         $products = DB::table('products')
             ->orderBy('id', 'desc')
             ->limit(4)
             ->get();
 
-
-        // Получаем отзывы для главной страницы
         $reviews = DB::table('feedback')
             ->select('feedback.*', 'users.name as user_name')
             ->leftJoin('users', 'feedback.user_id', '=', 'users.id')
             ->orderBy('feedback.created_at', 'desc')
-            ->limit(3) // Берем только 3 последних отзыва для главной
+            ->limit(3)
             ->get();
 
         return view('why', [
             'products' => $products,
-            'reviews' => $reviews // Добавляем отзывы
+            'reviews' => $reviews
         ]);
     }
 
@@ -53,14 +43,12 @@ class WhyController extends Controller
     {
         $user = Auth::user();
         
-        // Получаем все отзывы
         $reviews = DB::table('feedback')
             ->select('feedback.*', 'users.name as user_name')
             ->leftJoin('users', 'feedback.user_id', '=', 'users.id')
             ->orderBy('feedback.id', 'desc')
             ->get();
         
-        // Проверяем, есть ли отзыв от текущего пользователя
         $userReview = null;
         if ($user) {
             $userReview = DB::table('feedback')

@@ -2,15 +2,14 @@
 
 @section('content')
 <main>
-    <!-- Главный баннер -->
     <section class="hero-banner">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-10">
                     <div class="banner-content text-center">
-                        <span class="banner-badge">🔥 НОВИНКИ 2026</span>
-                        <h1 class="banner-title">СТРОИТЕЛЬНЫЕ МАТЕРИАЛЫ И ИНСТРУМЕНТЫ</h1>
-                        <p class="banner-text">Профессиональные материалы для строительства и ремонта. Надёжность, доступные цены и проверенное качество.</p>
+                        <span class="banner-badge"> НОВИНКИ 2026</span>
+                        <h1 class="banner-title">ВСЁ ДЛЯ ВАШИХ ПИТОМЦЕВ</h1>
+                        <p class="banner-text">Корма, игрушки, аксессуары и средства ухода для кошек, собак, птиц и грызунов. Забота о животных — наша главная миссия.</p>
                         <div class="banner-buttons justify-content-center">
                             <a href="{{ route('catalog') }}" class="btn btn-primary btn-lg">
                                 <i class="bi bi-grid me-2"></i>В КАТАЛОГ
@@ -25,7 +24,6 @@
         </div>
     </section>
 
-    <!-- Новые поступления -->
     <section class="py-5">
         <div class="container">
             <div class="section-header">
@@ -46,11 +44,14 @@
                         
                         <div class="product-image-wrapper">
                             <img src="{{ asset($product->image) }}" class="product-img" alt="{{ $product->name }}" 
-                                 onerror="this.src='https://via.placeholder.com/300x300/8e44ad/ffffff?text={{ urlencode($product->name) }}'">
+                                 onerror="this.src='https://via.placeholder.com/300x300/FF8C42/ffffff?text={{ urlencode($product->name) }}'">
                         </div>
                         
                         <div class="card-body">
                             <div class="category-label">{{ $product->category }}</div>
+                            @if($product->animal_type)
+                                <span class="animal-type-badge">{{ $product->animal_type }}</span>
+                            @endif
                             <h5 class="card-title">
                                 <a href="{{ route('product', $product->id) }}" class="product-title-link">
                                     {{ $product->name }}
@@ -62,7 +63,7 @@
                                 </small>
                             </div>
                             <div class="price-section">
-                                <div class="price">{{ number_format($product->price, 0, '', ' ') }} ₽/день</div>
+                                <div class="price">{{ number_format($product->price, 0, '', ' ') }} ₽</div>
                                 @if($product->in_stock > 0)
                                 <div class="actions">
                                     <button class="btn btn-cart-sm" onclick="event.stopPropagation(); document.getElementById('cart-form-{{ $product->id }}').submit();">
@@ -71,7 +72,6 @@
                                     <form id="cart-form-{{ $product->id }}" method="POST" action="{{ route('add_buscket') }}" class="d-none">
                                         @csrf
                                         <input type="hidden" name="id" value="{{ $product->id }}">
-                                        <input type="hidden" name="rental_days" value="1">
                                     </form>
                                 </div>
                                 @else
@@ -101,7 +101,6 @@
         </div>
     </section>
 
-    <!-- Преимущества -->
     <section class="py-5 bg-light">
         <div class="container">
             <div class="section-header text-center mb-5">
@@ -125,7 +124,7 @@
                             <i class="bi bi-shield-check"></i>
                         </div>
                         <h5>Гарантия качества</h5>
-                        <p class="text-muted">Официальная гарантия 2 года</p>
+                        <p class="text-muted">Сертифицированные товары</p>
                     </div>
                 </div>
                 <div class="col-md-3 col-sm-6">
@@ -152,9 +151,8 @@
 </main>
 
 <style>
-/* Баннер */
 .hero-banner {
-    background: linear-gradient(135deg, #1b2838 0%, #2a1b38 100%);
+    background: linear-gradient(135deg, #2D3436 0%, #1a1a2e 100%);
     padding: 80px 0;
     position: relative;
     overflow: hidden;
@@ -181,8 +179,8 @@
 
 .banner-badge {
     display: inline-block;
-    background: #fff;
-    color: #2c3e50;
+    background: #FF8C42;
+    color: #fff;
     padding: 0.5rem 1rem;
     border-radius: 50px;
     font-weight: 700;
@@ -211,7 +209,7 @@
 }
 
 .banner-buttons .btn-primary {
-    background: linear-gradient(135deg, #9b59b6, #8e44ad) !important;
+    background: linear-gradient(135deg, #FF8C42, #FF6B6B) !important;
     border: 2px solid transparent !important;
     font-weight: 700 !important;
     padding: 1rem 2rem !important;
@@ -221,7 +219,7 @@
 .banner-buttons .btn-primary:hover {
     background: #fff !important;
     border-color: #fff !important;
-    color: #9b59b6 !important;
+    color: #FF8C42 !important;
 }
 
 .banner-buttons .btn-outline-light {
@@ -234,10 +232,9 @@
 
 .banner-buttons .btn-outline-light:hover {
     background: #fff !important;
-    color: #9b59b6 !important;
+    color: #FF8C42 !important;
 }
 
-/* Заголовки секций */
 .section-header {
     margin-bottom: 3rem;
 }
@@ -256,7 +253,6 @@
     font-size: 1.1rem;
 }
 
-/* Карточки товаров */
 .product-card {
     background: #fff;
     border-radius: 16px;
@@ -271,7 +267,7 @@
 
 .product-card:hover {
     transform: translateY(-10px);
-    box-shadow: 0 12px 35px rgba(155, 89, 182, 0.2);
+    box-shadow: 0 12px 35px rgba(255, 140, 66, 0.2);
 }
 
 .product-image-wrapper {
@@ -299,7 +295,7 @@
     position: absolute;
     top: 10px;
     left: 10px;
-    background: linear-gradient(135deg, #9b59b6, #8e44ad);
+    background: linear-gradient(135deg, #20B2AA, #17a589);
     color: #fff;
     padding: 0.4rem 0.75rem;
     border-radius: 6px;
@@ -323,6 +319,17 @@
     text-transform: uppercase;
 }
 
+.animal-type-badge {
+    display: inline-block;
+    background: #FFF3E0;
+    color: #FF8C42;
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-bottom: 0.3rem;
+}
+
 .card-body {
     padding: 1.25rem;
     flex: 1;
@@ -332,7 +339,7 @@
 
 .category-label {
     font-size: 0.75rem;
-    color: #2c3e50;
+    color: #2D3436;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.5px;
@@ -366,13 +373,13 @@
 .price {
     font-size: 1.25rem;
     font-weight: 800;
-    color: #9b59b6;
+    color: #FF8C42;
 }
 
 .btn-cart-sm {
     width: 36px;
     height: 36px;
-    background: linear-gradient(135deg, #9b59b6, #8e44ad);
+    background: linear-gradient(135deg, #FF8C42, #FF6B6B);
     border: none;
     border-radius: 8px;
     display: flex;
@@ -384,7 +391,7 @@
 
 .btn-cart-sm:hover {
     transform: scale(1.1);
-    box-shadow: 0 4px 15px rgba(155, 89, 182, 0.4);
+    box-shadow: 0 4px 15px rgba(255, 140, 66, 0.4);
 }
 
 .btn-not-available {
@@ -400,7 +407,6 @@
     cursor: not-allowed;
 }
 
-/* Преимущества */
 .feature-box {
     padding: 2rem 1rem;
     background: #fff;
@@ -411,14 +417,14 @@
 
 .feature-box:hover {
     transform: translateY(-10px);
-    box-shadow: 0 12px 35px rgba(44, 62, 80, 0.1);
+    box-shadow: 0 12px 35px rgba(255, 140, 66, 0.1);
 }
 
 .feature-icon {
     width: 80px;
     height: 80px;
     margin: 0 auto 1rem;
-    background: linear-gradient(135deg, #9b59b6, #8e44ad);
+    background: linear-gradient(135deg, #FF8C42, #20B2AA);
     border-radius: 50%;
     display: flex;
     align-items: center;

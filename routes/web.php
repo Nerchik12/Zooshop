@@ -37,11 +37,16 @@ Route::get('/add_order', [App\Http\Controllers\CartController::class, 'add_order
 // ВАЖНО: Этот маршрут должен быть именно POST и не конфликтовать с другими
 Route::post('/remove_orders', [App\Http\Controllers\OrdersController::class, 'removeOrders'])->name('removeOrders');
 
-Route::get('/filter', [App\Http\Controllers\CatalogController::class, 'filter'])->name('filter');
+Route::get('/about', [App\Http\Controllers\AboutController::class, 'about'])->name('about');
+
+Route::get('/articles', [App\Http\Controllers\ArticleController::class, 'index'])->name('articles');
+Route::get('/articles/{slug}', [App\Http\Controllers\ArticleController::class, 'show'])->name('article.show');
+
+Route::get('/sales', [App\Http\Controllers\SalesController::class, 'index'])->name('sales');
+
 Route::get('/sendReviews', [App\Http\Controllers\ReviewController::class, 'sendReviews'])->name('sendReviews');
 Route::post('/sendReview', [App\Http\Controllers\ReviewController::class, 'sendReview'])->name('sendReview');
 Route::post('/update-quantity', [App\Http\Controllers\CartController::class, 'updateQuantity'])->name('update.quantity');
-Route::post('/update-rental-days', [App\Http\Controllers\CartController::class, 'updateRentalDays'])->name('update.rental_days');
 
 // API для корзины
 Route::get('/api/cart/count', [App\Http\Controllers\ApiCartController::class, 'count']);
@@ -73,6 +78,12 @@ Route::middleware(['auth', 'is.admin'])->prefix('admin')->name('admin.')->group(
     Route::get('/products/{id}/edit', [App\Http\Controllers\AdminController::class, 'editProduct'])->name('products.edit');
     Route::post('/products/{id}/update', [App\Http\Controllers\AdminController::class, 'updateProduct'])->name('products.update');
     Route::delete('/products/{id}', [App\Http\Controllers\AdminController::class, 'deleteProduct'])->name('products.delete');
+
+    // Промокоды
+    Route::get('/promocodes', [App\Http\Controllers\AdminController::class, 'promocodes'])->name('promocodes');
+    Route::get('/promocodes/create', [App\Http\Controllers\AdminController::class, 'createPromocode'])->name('promocodes.create');
+    Route::post('/promocodes', [App\Http\Controllers\AdminController::class, 'storePromocode'])->name('promocodes.store');
+    Route::delete('/promocodes/{id}', [App\Http\Controllers\AdminController::class, 'deletePromocode'])->name('promocodes.delete');
 });
 
 
